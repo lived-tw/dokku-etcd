@@ -31,7 +31,7 @@ case "$1" in
     dokku_log_info1 "Starting container"
     echo "" > "$SERVICE_ROOT/ENV"
     SERVICE_NAME=$(get_service_name "$SERVICE")
-    ID=$(docker run --name "$SERVICE_NAME" -v "$SERVICE_ROOT/data:/var/lib/etcd" --env-file="$SERVICE_ROOT/ENV" -d --restart always --label dokku=service --label dokku.service=etcd "$ETCD_IMAGE" -advertise-client-urls http://etcd.tld:2379,http://etcd.tld:4001 -listen-client-urls http://0.0.0.0:2379,http://0.0.0.0:4001 -listen-peer-urls http://0.0.0.0:2380)
+    ID=$(docker run --name "$SERVICE_NAME" -v "$SERVICE_ROOT/data:/var/lib/etcd" --env-file="$SERVICE_ROOT/ENV" -d --restart always --label dokku=service --label dokku.service=etcd "$ETCD_IMAGE":v2.3.8 -advertise-client-urls http://etcd.tld:2379,http://etcd.tld:4001 -listen-client-urls http://0.0.0.0:2379,http://0.0.0.0:4001 -listen-peer-urls http://0.0.0.0:2380)
     echo "$ID" > "$SERVICE_ROOT/ID"
 
     dokku_log_info2 "etcd container created: $SERVICE"
