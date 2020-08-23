@@ -2,7 +2,7 @@
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 source "$(dirname "$0")/config"
 
-docker pull $ETCD_IMAGE
+docker pull $ETCD_IMAGE:v2.3.8
 
 mkdir -p "$ETCD_ROOT" || echo "Failed to create etcd directory"
 chown dokku:dokku "$ETCD_ROOT"
