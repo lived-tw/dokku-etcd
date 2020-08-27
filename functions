@@ -225,3 +225,17 @@ service_logs() {
 
   docker logs $DOKKU_LOGS_ARGS "$ID"
 }
+
+remove_from_links_file() {
+  declare desc="Removes an app from the service link file"
+  declare SERVICE="$1" APP="$2"
+  local SERVICE_ROOT="$ETCD_ROOT/$SERVICE"
+  local LINKS_FILE="$SERVICE_ROOT/LINKS"
+
+  if [[ ! -f "$LINKS_FILE" ]]; then
+    return
+  fi
+
+  sed -i.bak "/^$APP\$/d" "$LINKS_FILE" && rm "$LINKS_FILE.bak"
+  sort "$LINKS_FILE" -u -o "$LINKS_FILE"
+}
